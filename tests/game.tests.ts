@@ -21,6 +21,17 @@ describe('test blossom game', () => {
 });
 
 describe('test blossom game', () => {
+    test('invalid word - less than four letters', () => {
+        let petals = ['R', 'O', 'A' ,'C', 'M', 'E'];
+        let game = new blossom.BlossomGame('T', petals);
+        let evaluator = new blossom.WordEvaluator(game);
+        var result = evaluator.verify("cat")
+        expect(result.reason).toEqual("Word must contain a minimum of four letters");
+        expect(result.valid).toEqual(false);
+    });
+});
+
+describe('test blossom game', () => {
     test('invalid word - missing centre letter', () => {
         let petals = ['R', 'O', 'A' ,'C', 'M', 'E'];
         let game = new blossom.BlossomGame('T', petals);
@@ -39,5 +50,16 @@ describe('test blossom game', () => {
         var result = evaluator.verify("comment")
         expect(result.reason).toEqual("Word contains unavailable letter");
         expect(result.valid).toEqual(false);
+    });
+});
+
+describe('test blossom game', () => {
+    test('valid word', () => {
+        let petals = ['R', 'O', 'A' ,'C', 'M', 'E'];
+        let game = new blossom.BlossomGame('T', petals);
+        let evaluator = new blossom.WordEvaluator(game);
+        var result = evaluator.verify("creator")
+        expect(result.reason).toBeUndefined();
+        expect(result.valid).toEqual(true);
     });
 });
