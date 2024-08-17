@@ -76,6 +76,9 @@ export class WordEvaluator
         let letterCounts = new Map<string, number>();
         for (let i = 0; i < word.length; ++ i) {
             var letter = word[i];
+            if (letter == this.game.centre)
+                continue;
+            
             var existingValue = letterCounts.get(letter);
             if (existingValue == undefined)
                 letterCounts.set(letter, 1);
@@ -93,5 +96,7 @@ export class WordEvaluator
         });
 
         const maxScore = Math.max(...letterScores.values());
+
+        return new WordEvaluation(word, maxScore, pangram, word.length, letterScores);
     }
 }

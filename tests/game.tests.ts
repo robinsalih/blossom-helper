@@ -63,3 +63,50 @@ describe('test blossom game', () => {
         expect(result.valid).toEqual(true);
     });
 });
+
+
+describe('test blossom game', () => {
+    test('evaluate 4 letter word', () => {
+        let petals = ['R', 'O', 'A' ,'C', 'M', 'E'];
+        let game = new blossom.BlossomGame('T', petals);
+        let evaluator = new blossom.WordEvaluator(game);
+        var result = evaluator.evaluate("tram");
+        expect(result.maxScore).toEqual(7);
+        expect(result.scores.get("R")).toEqual(7);
+        expect(result.scores.get("C")).toEqual(0);
+        expect(result.length).toEqual(4);
+        expect(result.word).toEqual("TRAM");
+        expect(result.pangram).toBeFalsy();
+    });
+});
+    
+    describe('test blossom game', () => {
+        test('evaluate longer word', () => {
+            let petals = ['S', 'N', 'L' ,'T', 'A', 'R'];
+            let game = new blossom.BlossomGame('E', petals);
+            let evaluator = new blossom.WordEvaluator(game);
+            var result = evaluator.evaluate("senselessnesses");
+            expect(result.maxScore).toEqual(71);
+            expect(result.scores.get("S")).toEqual(71);
+            expect(result.scores.get("N")).toEqual(46);
+            expect(result.scores.get("T")).toEqual(0);
+            expect(result.length).toEqual(15);
+            expect(result.word).toEqual("SENSELESSNESSES");
+            expect(result.pangram).toBeFalsy();
+        });
+    });
+    
+        describe('test blossom game', () => {
+            test('evaluate pangram', () => {
+                let petals = ['S', 'N', 'L' ,'T', 'A', 'R'];
+                let game = new blossom.BlossomGame('E', petals);
+                let evaluator = new blossom.WordEvaluator(game);
+                var result = evaluator.evaluate("Lanterns");
+                expect(result.maxScore).toEqual(32);
+                expect(result.scores.get("S")).toEqual(27);
+                expect(result.scores.get("N")).toEqual(32);
+                expect(result.length).toEqual(8);
+                expect(result.word).toEqual("LANTERNS");
+                expect(result.pangram).toBeTruthy();
+            });
+        });

@@ -5,16 +5,30 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Run Blossom App",
+            "program": "${workspaceFolder}/js/app.js",
+            "request": "launch",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ],
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\tests\\game.tests.ts",
+            "program": "${workspaceFolder}/js/app.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
-            ]
+            ],
+            "preLaunchTask": "Compile Typescript",
+            "internalConsoleOptions": "openOnSessionStart",
         }
     ]
 }
