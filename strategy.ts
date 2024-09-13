@@ -73,6 +73,67 @@ export class SimpleStrategy implements IStrategy {
     }
 }
 
+export class PetalBruteForceStrategyTwoAtATime implements IStrategy {
+    constructor(private helper: IStrategyHelper) {}
+    
+    public getMovesForGame(game: blossom.BlossomGame, words: string[]): BlossomWord[] {
+        const mapped = this.helper.evaluateWords(game, words);
+        let results = new Array<BlossomWord>();
+
+        const permutations = this.getPermutations(game);
+        let highestScore = 0;
+        const wordSets = new Set<string>();
+        permutations.forEach(permuation => {
+            let copy = new Map<string, blossom.WordEvaluation>();
+            mapped.forEach(w => copy.set(w.word, w));
+            const possibleSolution = new Array<BlossomWord>();
+            permuation.forEach(petal => {
+                var top2 = this.helper.getTopScoresForPetal(petal, copy, 2)
+                var blossomWord = new BlossomWord(petal, top2[0], top2[1]);
+                possibleSolution.push(blossomWord);
+                copy.delete(blossomWord.firstWord.word);
+                copy.delete(blossomWord.secondWord.word);
+            });
+            const total = possibleSolution.reduce((sum, current) => sum + current.firstWord.score + current.secondWord.score, 0);
+            if (total > highestScore) {
+                highestScore = total;
+                results = possibleSolution;
+            }
+        });
+
+        return results;
+    }
+
+    private getPermutations(game: blossom.BlossomGame) : string[][]{
+        return this.getSubPermutations(game.petals);
+    }
+
+    private getSubPermutations(petals: string[]) : string[][]{
+        if (petals.length == 1)
+            return [petals];
+
+        const results = new Array<Array<string>>();
+        for (let i = 0; i < petals.length; ++i) {
+            const firstPetal = petals[i];
+            var remainingPetals = new Array<string>();
+            for (let j = 0; j < petals.length; ++j) {
+                if (i == j)
+                    continue;
+                remainingPetals.push(petals[j]);
+            }
+            var permutations = this.getSubPermutations(remainingPetals);
+            permutations.forEach(permuation => {
+                var newArray = permuation.slice();
+                newArray.unshift(firstPetal);
+                results.push(newArray)
+        });
+        }
+
+        return results;
+    }
+
+} 
+
 export class PetalBruteForceStrategy implements IStrategy {
     constructor(private helper: IStrategyHelper) {}
     
@@ -98,6 +159,7 @@ export class PetalBruteForceStrategy implements IStrategy {
         const permutations = this.getPermutations(game);
         let results = new Map<string, WordWithScore>();
         let highestScore = 0;
+        const wordSets = new Set<string>();
         permutations.forEach(permuation => {
             let copy = new Map<string, blossom.WordEvaluation>();
             words.forEach(w => copy.set(w.word, w));
@@ -112,8 +174,10 @@ export class PetalBruteForceStrategy implements IStrategy {
                 highestScore = total;
                 results = possibleSolution;
             }
+            wordSets.add(game.petals.map(p => possibleSolution.get(p)).map(p => p?.word).join(";"));
         });
 
+        console.log(`${wordSets.size} distinct solutions`);
         return results;
     }
 

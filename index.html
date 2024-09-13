@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Blossom Helper</title>
+</head>
+<body>
+    <header><h2>
+        Blossom word placer
+    </h2>
+    </header>
+    <main>
+        <article>
+            <p id="instructions">
+                This helps you find the optimal solution for the blossom puzzle.  Enter in the centre letter and the petals.  Then enter the words you have found and it will find 
+                the best way to allocate them to the petals.  It checks that words are valid (i.e. contains the centre letter etc.), but not that they are in the dictionary.  It will
+                calculate the score you will get.  Enter your words, and as soon as you have 12 or more words you can press the go button!
+            </p>
+        </article>
+        <h2>Today's game</h2>
+        <div class = "input-boxes">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Centre:</td>
+                        <td><input type = "text" maxlength="1" id="centre"></td>
+                    </tr>
+                    <tr>
+                        <td>Petals:</td>
+                        <td><input type = "text" maxlength="1" id="petal1"></td>
+                        <td><input type = "text" maxlength="1" id="petal2"></td>
+                        <td><input type = "text" maxlength="1" id="petal3"></td>
+                        <td><input type = "text" maxlength="1" id="petal4"></td>
+                        <td><input type = "text" maxlength="1" id="petal5"></td>
+                        <td><input type = "text" maxlength="1" id="petal6"></td>
+                    </tr>
+                </tbody>
+                </table>
+        </div>
+    <h2>Your words</h2>
+    <div class = "input-boxes">
+        <textarea id="user-words" rows="1" cols="36"></textarea>
+        <button id="calculate">Calculate</button>
+    </div>
+    <h2>Optimal Solution</h2>
+    <div id="solution">
+        <table>
+            <thead>
+                <tr>
+                    <th>Petal</th>
+                    <th>First word</th>
+                    <th>Second word</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="p1">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="p2">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="p3">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="p4">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="p5">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="p6">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <p id="summary"></p>
+    </div>
+    </main>
+    <script>var exports = {};</script>
+    <script type="module" src="js/script.js"></script>
+</body>
+</html>
